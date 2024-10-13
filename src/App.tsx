@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Profile from "./components/Profile";
-import Home from "./components/Home";
-import NotFound from "./components/NotFound";
+import Profile from "./pages/Profile";
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 import "./globals.css";
 import "@fontsource-variable/inter";
 

@@ -1,8 +1,8 @@
 import React from "react";
-import { Button } from "./ui/button";
-import Auth from "./Auth";
+import { Button } from "../components/ui/button";
 import { SignUpDialogComponent } from "./SignUp";
-import { CardWithForm } from "./CardTest";
+import { CardWithForm } from "../components/CardTest";
+import { SignOut } from "../components/SignOut";
 
 const Home: React.FC = () => {
   return (
@@ -12,8 +12,8 @@ const Home: React.FC = () => {
       <SignUpDialogComponent />
 
       <Button variant="secondary">Click me to Sign in!</Button>
-      <Auth />
-      {/* Add a button or links for users to sign up or log in */}
+
+      <SignOut />
       <CardWithForm />
     </div>
   );

@@ -15,14 +15,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { auth, googleProvider } from "@/firebaseConfig";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { Mail, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { SiGooglecloud } from "@icons-pack/react-simple-icons";
+import { getUserAuthErrorMessage } from "@/lib/authFunctions";
 
 export function SignUpDialogComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-  const [submissionError, setSubmissionError] = useState<boolean>(false);
+  const [isSignUpError, setIsSignUpError] = useState<boolean>(false);
+  const [signUpError, setSignUpError] = useState<string>("");
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevent form submission from refreshing the page
@@ -33,19 +36,21 @@ export function SignUpDialogComponent() {
       setIsDialogOpen(false); // Close dialog on successful signup
     } catch (err) {
       console.error(err);
+      setIsSignUpError(true);
+      setSignUpError(getUserAuthErrorMessage((err as Error).message));
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleGoogleSignUp = async () => {
-    setIsLoading(true);
-
     try {
       await signInWithPopup(auth, googleProvider);
       setIsDialogOpen(false); // Close dialog on successful signup
     } catch (err) {
       console.error(err);
+      setIsSignUpError(true);
+      setSignUpError(getUserAuthErrorMessage((err as Error).message));
     } finally {
       setIsLoading(false);
     }
@@ -55,6 +60,14 @@ export function SignUpDialogComponent() {
     // Prevent closing the dialog if still loading
     if (!isLoading) {
       setIsDialogOpen(open);
+    }
+
+    if (!open) {
+      // Reset the form on dialog close
+      setEmail("");
+      setPassword("");
+      setIsSignUpError(false);
+      setSignUpError("");
     }
   };
 
@@ -72,25 +85,25 @@ export function SignUpDialogComponent() {
             Create a new account using an email.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSignUp}>
+        <form onSubmit={handleSignUp} noValidate>
           <div className="grid gap-4 mb-4 scroll-m-20">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">
-                Email
+            <div className="grid grid-rows grid-cols items-center gap-2">
+              <Label htmlFor="email" className="text-left">
+                Email:
               </Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="Email"
+                placeholder="example@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="col-span-3"
+                className=""
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="password" className="text-right">
-                Password
+            <div className="grid grid-rows grid-cols items-center gap-2">
+              <Label htmlFor="password" className="text-left">
+                Password:
               </Label>
               <Input
                 id="password"
@@ -98,10 +111,21 @@ export function SignUpDialogComponent() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="col-span-3"
+                className=""
                 required
               />
             </div>
+            <p
+              className={`text-right text-destructive ${isSignUpError ? "" : "hidden"}`}
+            >
+              {signUpError}
+            </p>
+
+            <p className="text-right">
+              Already have an account?{" "}
+              <span className="text-primary">Sign in here</span>
+            </p>
+
             <Button type="submit" className="" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Sign Up with Email
@@ -126,8 +150,12 @@ export function SignUpDialogComponent() {
             className="w-full"
             disabled={isLoading}
           >
-            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Sign Up with Google
+            {isLoading ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <SiGooglecloud className="mr-2 h-4 w-4" />
+            )}{" "}
+            Google
           </Button>
 
           <DialogFooter className="flex flex-col items-stretch sm:items-center"></DialogFooter>
