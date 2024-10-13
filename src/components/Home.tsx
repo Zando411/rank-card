@@ -3,6 +3,7 @@ import { Button } from './ui/button';
 import Auth from './Auth';
 import { SignUpDialogComponent } from './SignUp';
 import { CardWithForm } from './CardTest';
+import { UserAuthForm } from './UserAuthForm';
 
 const Home: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const Home: React.FC = () => {
       <Auth />
       {/* Add a button or links for users to sign up or log in */}
       <CardWithForm />
+      <UserAuthForm />
     </div>
   );
 };
