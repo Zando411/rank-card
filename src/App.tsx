@@ -4,6 +4,7 @@ import Profile from './components/Profile';
 import Home from './components/Home';
 import NotFound from './components/NotFound';
 import './globals.css';
+import '@fontsource-variable/inter';
 
 function App() {
 
