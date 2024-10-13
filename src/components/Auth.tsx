@@ -1,51 +1,62 @@
-import React from 'react';
-import { useState } from "react"
-import { Button } from './ui/button';
-import { auth, googleProvider } from '@/firebaseConfig';
-import { createUserWithEmailAndPassword, signInWithPopup, signOut} from 'firebase/auth';
+import React from "react";
+import { useState } from "react";
+import { Button } from "./ui/button";
+import { auth, googleProvider } from "@/firebaseConfig";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
 
 const Auth: React.FC = () => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    
-    console.log(auth?.currentUser?.email);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const signIn = async () => {
-        try{
-            await createUserWithEmailAndPassword(auth, email, password);
-        } catch (err) {
-            console.error(err);
-        }
-    };
+  console.log(auth?.currentUser?.email);
 
-    const logout = async () => {
-        try{
-            await signOut(auth);
-        } catch (err) {
-            console.error(err);
-        }
-    };
+  const signIn = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-    const signInWithGoogle = async () => {
-        try{
-            await signInWithPopup(auth, googleProvider);
-        } catch (err) {
-            console.error(err);
-        }
-    };
-    
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-    return (
-        <div>
-            <input placeholder='email' type='email' onChange={(e) => setEmail(e.target.value)}/>
-            <input placeholder='password' type='password' onChange={(e) => setPassword(e.target.value)}/>
-            <Button onClick={signIn}>Sign in!</Button>
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-            <Button onClick={signInWithGoogle}>Sign in with google</Button>
+  return (
+    <div>
+      <input
+        placeholder="email"
+        type="email"
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        placeholder="password"
+        type="password"
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <Button onClick={signIn}>Sign in!</Button>
 
-            <Button onClick={logout}>Sign out</Button>
-        </div>
-    );
+      <Button onClick={signInWithGoogle}>Sign in with google</Button>
+
+      <Button onClick={logout}>Sign out</Button>
+    </div>
+  );
 };
 
 export default Auth;

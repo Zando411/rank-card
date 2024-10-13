@@ -1,13 +1,12 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Profile from './components/Profile';
-import Home from './components/Home';
-import NotFound from './components/NotFound';
-import './globals.css';
-import '@fontsource-variable/inter';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Profile from "./components/Profile";
+import Home from "./components/Home";
+import NotFound from "./components/NotFound";
+import "./globals.css";
+import "@fontsource-variable/inter";
 
 function App() {
-
   return (
     <Router>
       <Routes>
@@ -21,7 +20,7 @@ function App() {
         <Route path="/404" element={<NotFound />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;

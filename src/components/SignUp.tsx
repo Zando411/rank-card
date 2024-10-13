@@ -1,7 +1,7 @@
-"'use client'"
+"'use client'";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,54 +10,53 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { auth, googleProvider } from '@/firebaseConfig';
-import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { Mail, Loader2 } from "lucide-react"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { auth, googleProvider } from "@/firebaseConfig";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { Mail, Loader2 } from "lucide-react";
 
 export function SignUpDialogComponent() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
-  const [submissionError, setSubmissionError] = useState<boolean>(false)
-
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [submissionError, setSubmissionError] = useState<boolean>(false);
 
   const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault() // Prevent form submission from refreshing the page
-    setIsLoading(true)
+    e.preventDefault(); // Prevent form submission from refreshing the page
+    setIsLoading(true);
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password)
-      setIsDialogOpen(false) // Close dialog on successful signup
+      await createUserWithEmailAndPassword(auth, email, password);
+      setIsDialogOpen(false); // Close dialog on successful signup
     } catch (err) {
-      console.error(err)
+      console.error(err);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleGoogleSignUp = async () => {
     setIsLoading(true);
 
-    try{
-        await signInWithPopup(auth, googleProvider);
-        setIsDialogOpen(false) // Close dialog on successful signup
+    try {
+      await signInWithPopup(auth, googleProvider);
+      setIsDialogOpen(false); // Close dialog on successful signup
     } catch (err) {
-        console.error(err);
+      console.error(err);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-};
+  };
 
-const handleDialogChange = (open: boolean) => {
-  // Prevent closing the dialog if still loading
-  if (!isLoading) {
-    setIsDialogOpen(open)
-  }
-}
+  const handleDialogChange = (open: boolean) => {
+    // Prevent closing the dialog if still loading
+    if (!isLoading) {
+      setIsDialogOpen(open);
+    }
+  };
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={handleDialogChange}>
@@ -66,7 +65,9 @@ const handleDialogChange = (open: boolean) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">Sign Up</DialogTitle>
+          <DialogTitle className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+            Sign Up
+          </DialogTitle>
           <DialogDescription>
             Create a new account using an email.
           </DialogDescription>
@@ -88,7 +89,7 @@ const handleDialogChange = (open: boolean) => {
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="password" className="text-right">
+              <Label htmlFor="password" className="text-right">
                 Password
               </Label>
               <Input
@@ -101,38 +102,37 @@ const handleDialogChange = (open: boolean) => {
                 required
               />
             </div>
-            <Button type="submit" className=""disabled={isLoading}>
-            {isLoading && (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            )}
+            <Button type="submit" className="" disabled={isLoading}>
+              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Sign Up with Email
-              </Button>
+            </Button>
           </div>
 
           <div className="relative mb-4">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
-      </div>
-          
-          <Button type="button" variant="outline" onClick={handleGoogleSignUp} className="w-full" disabled={isLoading}>
-          {isLoading && (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            )}
-              Sign Up with Google
-            </Button>
-            
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">
+                Or continue with
+              </span>
+            </div>
+          </div>
 
-          <DialogFooter className="flex flex-col items-stretch sm:items-center">
-            
-          </DialogFooter>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleGoogleSignUp}
+            className="w-full"
+            disabled={isLoading}
+          >
+            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Sign Up with Google
+          </Button>
+
+          <DialogFooter className="flex flex-col items-stretch sm:items-center"></DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
