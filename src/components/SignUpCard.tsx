@@ -17,9 +17,11 @@ import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { Loader2 } from "lucide-react";
 import { SiGooglecloud } from "@icons-pack/react-simple-icons";
 import { getUserAuthErrorMessage } from "@/lib/authFunctions";
+import { Link } from "react-router-dom";
 
 export default function SignUpCard() {
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSignUpError, setIsSignUpError] = useState<boolean>(false);
@@ -80,6 +82,19 @@ export default function SignUpCard() {
               />
             </div>
             <div className="grid grid-cols-1 items-center gap-2">
+              <Label htmlFor="username" className="text-left">
+                Username:
+              </Label>
+              <Input
+                id="username"
+                type="username"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+            <div className="grid grid-cols-1 items-center gap-2">
               <Label htmlFor="password" className="text-left">
                 Password:
               </Label>
@@ -93,14 +108,16 @@ export default function SignUpCard() {
               />
             </div>
             <p
-              className={`text-right text-destructive ${isSignUpError ? "" : "hidden"}`}
+              className={`text-right text-sm text-destructive ${isSignUpError ? "" : "hidden"}`}
             >
               {signUpError}
             </p>
 
             <p className="text-right">
               Already have an account?{" "}
-              <span className="text-primary">Sign in here</span>
+              <Link to="/signin" className="text-primary">
+                Sign in here
+              </Link>
             </p>
 
             <Button type="submit" className="w-full" disabled={isLoading}>
