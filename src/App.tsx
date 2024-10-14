@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import "./globals.css";
 import "@fontsource-variable/inter";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return (
@@ -12,6 +13,8 @@ function App() {
       <Routes>
         {/* Home Route */}
         <Route path="/" element={<Home />} />
+
+        <Route path="/signup" element={<SignUp />} />
 
         {/* Dynamic route for each user's profile (e.g., /Zando, /John) */}
         <Route path="/:username" element={<Profile />} />
