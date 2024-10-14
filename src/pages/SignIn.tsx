@@ -1,13 +1,13 @@
 "use client";
 import Navbar from "@/components/Nav";
-import SignUpCard from "@/components/SignUpCard";
+import SignInCard from "@/components/SignInCard";
 
-export default function SignUp() {
+export default function LogIn() {
   return (
     <div>
       <Navbar />
       <div className="flex flex-col justify-start p-16 items-center min-h-full">
-        <SignUpCard />
+        <SignInCard />
       </div>
     </div>
   );
